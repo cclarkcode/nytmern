@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import { Link } from "react-router-dom";
 import ShowArticle from '../components/ShowArticle';
+import API from '../utils/API';
 
 class Results extends Component {
 
@@ -17,19 +18,23 @@ componentDidMount() {
 
 remove (index) {
 
-  this.setState({
-    removeindex: index
-  }, () => {
-    this.clearArticle();
-  });
+const newresults = this.state.results;
+
+newresults.splice(index,1);
+
+this.setState({
+   results: newresults
+ });
 
 }
 
-clearArticle() {
-  console.log('Trying');
-  console.log(this.state);
-}
+saveArticle (event) {
+const index = event.target.getAttribute('data-index');
+const data = this.state.results[index];
 
+API.save(data);
+
+}
 
   render() {
   return <div>
@@ -54,8 +59,9 @@ clearArticle() {
                 location='results'
                 index={index}
                 key={index}
-                saveArticle={this.saveArticle}
-                remove={this.remove} />
+                saveArticle={this.saveArticle.bind(this)}
+                remove={this.remove.bind(this)} 
+                />
       })
       : 
       <h1>No Results to display. Go to the <Link to="/">Search</Link> page to Search for something </h1>}
@@ -65,7 +71,7 @@ clearArticle() {
       </div>
 
     </div>
-  </div>
+  </div>;
     
   }
 }

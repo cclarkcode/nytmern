@@ -11,16 +11,28 @@ class Search extends Component {
     this.props = props;
 }
 
-  // When the component mounts, get a list of all available base breeds and update this.state.breeds
-  // componentDidMount() {
-  //   console.log('Running mount');
-  //   API.search('Trump',2010)
-  //     .then(res => {
-  //       this.setState({ results: res.data.response.docs })
-  //       console.log(this.state.results);
-  //     })
-  //     .catch(err => console.log(err));
-  // }
+state = {
+  search: '',
+  results: [],
+  savedResults: [] 
+}
+
+  formatdata = data => {
+    let newData = [];
+
+    data.map((item) => {
+      newData.push({
+        title: item.headline.main,
+        link: item.web_url,
+        byline: item.byline.original,
+        date: API.formatDate(item.pub_date)
+      });
+    });
+  
+    console.log(newData);
+
+    return newData;
+  }
 
   handleInputChange = event => {
     this.setState({ search: event.target.value });
@@ -32,12 +44,14 @@ class Search extends Component {
       .then(res => {
         this.setState({ 
           search: searchTerm,
-          results: res.data.response.docs
+          results: this.formatdata(res.data.response.docs)
+        }, () => {
+          this.props.history.push({
+            pathname: '/results',
+            state: this.state
+          });
         });
-        this.props.history.push({
-          pathname: '/results',
-          state: this.state
-        });
+        
       })
       .catch(err => console.log(err));
   };
