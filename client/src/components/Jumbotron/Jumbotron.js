@@ -1,17 +1,12 @@
 import React from "react";
 import "./Jumbotron.css";
 
-const Jumbotron = () => (
-  <div className="jumbotron text-center">
-    <h1>React Recipes</h1>
-    <a
-      target="_blank"
-      rel="noopener noreferrer"
-      href="http://www.recipepuppy.com/about/api/"
-    >
-      Powered by Recipe Puppy
-    </a>
-  </div>
-);
+const Hero = props =>
+  <div
+    className="jumbotron text-center"
+  >
+    <h1>NYT Search and Save</h1>
+    <h2>Search for and curate articles from the New York Times</h2>
+  </div>;
 
-export default Jumbotron;
+export default Hero;

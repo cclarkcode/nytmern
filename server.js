@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 3001;
 const app = express();
 const apiRoutes = require("./routes/apiRoutes");
+const db = require('./modules/db-setup.js');
 
 // Serve up static assets
 app.use(express.static("client/build"));

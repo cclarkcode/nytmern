@@ -1,0 +1,19 @@
+div.well {
+  padding-top: 10px;
+}
+
+ul.search-results img {
+  margin: 0 auto;
+}
+
+span.label {
+  margin-right: 10px;
+}
+
+span.articleHeadline {
+  font-weight: bold;
+}
+
+button.btn-primary {
+  margin-right: 20px;
+}
