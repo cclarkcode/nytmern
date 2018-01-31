@@ -11,13 +11,18 @@ class Search extends Component {
     this.props = props;
 }
 
+componentDidMount() {
+  console.log(this.state);
+  console.log(document.location);
+}
+
 state = {
   search: '',
   results: [],
   savedResults: [] 
 }
 
-  formatdata = data => {
+  formatData = data => {
     let newData = [];
 
     data.map((item) => {
@@ -44,7 +49,7 @@ state = {
       .then(res => {
         this.setState({ 
           search: searchTerm,
-          results: this.formatdata(res.data.response.docs)
+          results: this.formatData(res.data.response.docs)
         }, () => {
           this.props.history.push({
             pathname: '/results',

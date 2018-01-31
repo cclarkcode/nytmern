@@ -40,6 +40,69 @@ router.get('/articles', (req,res) => {
 
 });
 
+router.get('/alllists', (req,res) => {
+
+    db.List.find(function (error,data) {
+
+      if (error) {
+          console.log(error)
+      } else {
+          res.json(data);
+      }
+
+  });
+
+});
+
+router.get('/activelist', (req,res) => {
+
+  db.List.findOne({
+    active: true
+  }, function (error,data) {
+
+    if (error) {
+        console.log(error)
+    } else {
+        res.json(data);
+    }
+
+});
+
+});
+
+router.post('/activelist/:list', (req,res) => {
+  db.List.findOne({
+    active: true
+  }, function (error,data) {
+    if (error) {
+      console.log(error)
+    } else {
+      //Update current active list to false  
+      db.List.update({
+          '_id': data['_id']
+        },{
+          active: false
+        }, function (error,data) {
+          db.List.update({
+            name: req.params.list
+          },{
+            active: true
+          }, function(error, data) {
+
+            if (error) {
+              res.send(error)
+            } else {
+              res.send(data);
+            }
+          });
+        });
+    }
+  });
+
+});
+
+
+
 router.delete('/:id', (req,res) => {
   console.log('Deleting');
   db.Article.remove({

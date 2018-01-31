@@ -33,6 +33,18 @@ export default {
 
   remove: function(id) {
     return axios.delete('/api/' + id);
+  },
+
+  getAllLists: function() {
+    return axios.get('/api/alllists');
+  },
+
+  getActiveList: function() {
+    return axios.get('/api/activelist');
+  },
+
+  changeActiveList: function(listName) {
+    return axios.post('/api/activelist/' + listName);
   }
   
 };
