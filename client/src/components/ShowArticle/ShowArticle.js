@@ -30,7 +30,7 @@ render() {
     : ''}
     <h5>
       {this.props.article.date ? 
-          API.formatDate(this.props.article.date) : ''}
+          this.props.article.date : ''}
     </h5>
     {this.props.location === 'results' ? 
     <button className='btn btn-primary'

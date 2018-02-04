@@ -1,3 +1,25 @@
 nav.navbar.navbar-default {
   margin-bottom: 0;
 }
+
+
+li.navbar-text {
+  overflow: auto;
+  
+}
+
+li#split {
+  color: white;
+}
+
+select#listselect {
+  margin-right: 20px;
+}
+
+span#currentList {
+  padding-left: 10px;
+}
+
+
+
+

@@ -11,13 +11,25 @@ class Search extends Component {
     this.props = props;
 }
 
+componentDidMount() {
+  this.setState({
+    currentList: document.getElementById('currentList').innerText
+  }, () => {
+    API.getCurrentList(this.state.currentList)
+      .then((data)=> {
+        console.log(data);
+      })
+  });
+}
+  
 state = {
+  currentList: '',
   search: '',
   results: [],
   savedResults: [] 
 }
 
-  formatdata = data => {
+  formatData = data => {
     let newData = [];
 
     data.map((item) => {
@@ -38,13 +50,13 @@ state = {
     this.setState({ search: event.target.value });
   };
 
-  search = (searchTerm,startYear,endYear) => {
+  search = (searchTerm,startDate,endDate) => {
     
-    API.search(searchTerm,startYear,endYear)
+    API.search(searchTerm,startDate,endDate)
       .then(res => {
         this.setState({ 
           search: searchTerm,
-          results: this.formatdata(res.data.response.docs)
+          results: this.formatData(res.data.response.docs)
         }, () => {
           this.props.history.push({
             pathname: '/results',
@@ -65,7 +77,7 @@ state = {
           <div className="panel-body">
             
             <SearchForm
-              search={this.search}
+              search={this.search.bind(this)}
             />
           </div>
         </div>

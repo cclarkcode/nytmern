@@ -8,12 +8,23 @@ class Results extends Component {
   constructor(props) {
     super(props);
     this.props = props;
-    this.state = this.props.location.state;
+    if (this.props.location.state) {
+      this.state = this.props.location.state;
+    }
+    else {
+      this.state = {
+        results: []
+      }
+    }
 }
 
 
+
+
 componentDidMount() {
-  console.log(this.state);
+  this.setState({
+    currentList: document.getElementById('currentList').innerText
+  })
 }
 
 remove (index) {
@@ -32,7 +43,7 @@ saveArticle (event) {
 const index = event.target.getAttribute('data-index');
 const data = this.state.results[index];
 
-API.save(data);
+API.save(data,this.state.currentList);
 
 }
 
@@ -52,7 +63,7 @@ API.save(data);
 
          
           <div className="panel-body" id="well-section">
-            {this.state ? 
+            {this.state && this.state.results.length > 0 ? 
               this.state.results.map((item,index) => {
               return <ShowArticle 
                 article={item} 

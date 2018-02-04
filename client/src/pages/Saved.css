@@ -1,0 +1,12 @@
+#newlistform {
+    float: right;
+}
+
+input#newlist {
+    margin-right: 10px;
+    color: black;
+}
+
+button#listbutton {
+    color: black;
+}

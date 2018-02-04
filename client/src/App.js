@@ -11,10 +11,21 @@ import Container from './components/Container';
 
 class App extends Component {
 
+  state = {
+    activeList: 'Default'
+  }
+
+  changeList(data) {
+    this.setState({
+      activeList: data
+    })
+  }
    
  render= () =>  <Router>
     <Container>
-      <Navbar />
+      <Navbar 
+      activeList={this.state.activeList}
+      changeList={this.changeList.bind(this)}/>
       <Jumbotron/>
       <Wrapper>
         <Route exact path="/" component={Search} />
