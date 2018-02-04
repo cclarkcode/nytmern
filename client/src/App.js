@@ -12,7 +12,7 @@ import Container from './components/Container';
 class App extends Component {
 
   state = {
-    activeList: 'Current'
+    activeList: 'Default'
   }
 
   changeList(data) {

@@ -13,14 +13,26 @@ class Navbar extends Component {
 
 state = {
   lists: [],
-  activeList: ''
+  activeList: '',
+  changeList: ''
 }
 
 componentDidMount() {
+ this.getData();
+}
+
+getData() {
   API.getAllLists().then((data) => {
-    console.log(data);
+    
     this.setState({
-      lists: data.data.map((item) => item.name)
+      lists: data.data.map((item) => {
+        if (item.active === true) {
+          console.log(item.name);
+          this.setState({
+            activeList: item.name
+          })
+        }
+        return item.name;})
     });
   });
 }
@@ -28,63 +40,83 @@ componentDidMount() {
 handleChange (event) {
 
   this.setState({
-    activeList: event.target.value
+    changeList: event.target.value
   });
 }
 
 submitList (event) {
   event.preventDefault();
 
-  this.props.changeList(this.state.activeList);
+  API.changeActiveList(this.state.changeList)
+    .then( () => {
+     window.location.reload();
+    })
+  
 }
 
   
   
   render() {
+    {console.log(this.state.activeList);}
     return <nav className="navbar navbar-default">
     <div className="container-fluid">
-      <div className="navbar-header">
-        <span className="navbar-brand">
-          NYT Search and Save
-        </span>
-      </div>
-      <ul className="nav navbar-nav">
-        <li
-          className={
-            window.location.pathname === "/"
-              ? "active"
-              : ""
-          }
-        >
-          <Link to="/">Search</Link>
-        </li>
-       
-        <li
-          className={window.location.pathname === "/results" ? "active" : ""}
-        >
-          <Link to="/results">Results</Link>
-        </li>
-        <li
-          className={window.location.pathname === "/saved" ? "active" : ""}
-        >
-          <Link to="/saved">Saved</Link>
-        </li>
-        
-      </ul>
-      <div className='navbar-header list'>
-          <ul className='nav navbar-nav'>
-            <li>Active List: {this.props.activeList}</li>
-            <li>Change List: 
-              <form name='listchange'>
-                <select defaultValue='Choose' onChange={this.handleChange.bind(this)}>
-                  <option value='Choose' disabled>Choose</option>
-                  {this.state.lists.map((item,index) => <option value={item} key={index}>{item}</option>)}
-                </select>
-              </form>
-              <button form='listchange' value='Submit' onClick={this.submitList.bind(this)}>Submit</button>
+      
+          <div className="navbar-header">
+            <span className="navbar-brand">
+              NYT Search and Save
+            </span>
+          </div>
+          <ul className="nav navbar-nav">
+            <li
+              className={
+                window.location.pathname === "/"
+                  ? "active"
+                  : ""
+              }
+            >
+              <Link to="/">Search</Link>
             </li>
-          </ul>
-      </div>
+          
+            <li
+              className={window.location.pathname === "/results" ? "active" : ""}
+            >
+              <Link to="/results">Results</Link>
+            </li>
+            <li
+              className={window.location.pathname === "/saved" ? "active" : ""}
+            >
+              <Link to="/saved">Saved</Link>
+            </li>
+            
+                
+          </ul>  
+        
+        <div className='navbar-right'>
+
+      
+      
+          <ul className='nav navbar-nav'>
+          <li className='navbar-text' id='split'> Active List: <span id='currentList'>{this.state.activeList}</span></li>  
+          <li className='navbar-text' id='split'> Change List: </li>
+          <li className='navbar-text'> 
+              <form className="form-inline my-2 my-lg-0" id='listform'>
+                <select 
+                placeholder='Choose' 
+                value={this.state.changeList}
+                onChange={this.handleChange.bind(this)}
+                id='listselect'>
+                    <option value='Choose' disabled>Choose</option>
+                    {this.state.lists.map((item,index) => <option value={item} key={index}>{item}</option>)}
+                  </select>
+                <button 
+                        id='listbutton' 
+                        type="submit"
+                        onClick={this.submitList.bind(this)}>Change</button>
+              </form> 
+          </li>  
+          </ul> 
+        
+        </div>
     </div>
   </nav>;
 

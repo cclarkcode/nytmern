@@ -20,8 +20,10 @@ function test (db) {
         description: "Nothing"
     });
 
+    console.log(typeof newarticle);
+
     var data = {
-        name: 'Current',
+        name: 'Default',
         active: true
     }
 
@@ -59,6 +61,6 @@ function test (db) {
 
 }
 
-// test(db);
+    // test(db);
 
 module.exports = db;

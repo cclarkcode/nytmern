@@ -2,9 +2,24 @@ nav.navbar.navbar-default {
   margin-bottom: 0;
 }
 
-div.list {
-  float: right;
-  z-index: 2;
-  background: black;
-  margin: auto 0;
+
+li.navbar-text {
+  overflow: auto;
+  
 }
+
+li#split {
+  color: white;
+}
+
+select#listselect {
+  margin-right: 20px;
+}
+
+span#currentList {
+  padding-left: 10px;
+}
+
+
+
+
