@@ -61,6 +61,6 @@ function test (db) {
 
 }
 
-    test(db);
+    // test(db);
 
 module.exports = db;
